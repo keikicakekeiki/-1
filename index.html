@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>一級建築士 製図記述トレーナー v7</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#fff; --text:#18202a; --muted:#667085; --line:#d9dee7;
+    --accent:#2563eb; --soft:#eef4ff;
+  }
+
+  *{
+    box-sizing:border-box
+  }
+
+  html{
+    -webkit-text-size-adjust:100%
+  }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    line-height:1.58
+  }
+
+  .wrap{
+    max-width:860px;
+    margin:0 auto;
+    padding:14px 12px 56px
+  }
+
+  header,
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:16px;
+    margin:0 0 12px;
+    contain:layout paint
+  }
+
+  h1{
+    font-size:22px;
+    margin:0 0 4px
+  }
+
+  .sub,
+  .muted{
+    color:var(--muted)
+  }
+
+  .sub{
+    font-size:14px
+  }
+
+  .badge{
+    display:inline-block;
+    background:var(--soft);
+    color:#1849a9;
+    border-radius:999px;
+    padding:4px 10px;
+    font-size:12px;
+    font-weight:700;
+    margin-top:8px
+  }
+
+  .step{
+    font-size:13px;
+    font-weight:800;
+    color:var(--accent);
+    margin-bottom:5px
+  }
+
+  h2{
+    font-size:18px;
+    margin:0 0 10px
+  }
+
+  .question{
+    font-weight:700;
+    background:#f8fafc;
+    border-left:4px solid var(--accent);
+    padding:11px 13px;
+    border-radius:8px;
+    margin:9px 0 12px
+  }
+
+  .choices{
+    display:grid;
+    gap:9px
+  }
+
+  .choice{
+    display:flex;
+    align-items:flex-start;
+    gap:9px;
+    cursor:pointer;
+    -webkit-tap-highlight-color:transparent;
+    touch-action:manipulation
+  }
+
+  .choice input{
+    width:22px;
+    height:22px;
+    margin:12px 0 0;
+    flex:0 0 auto;
+    accent-color:var(--accent)
+  }
+
+  .choiceBox{
+    display:block;
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:11px;
+    padding:11px 12px;
+    background:#fff
+  }
+
+  .choice input:checked + .choiceBox{
+    border-color:var(--accent);
+    background:var(--soft)
+  }
+
+  .choice strong{
+    display:block;
+    font-size:15px
+  }
+
+  .choice small{
+    display:block;
+    color:var(--muted);
+    margin-top:2px
+  }
+
+  textarea{
+    display:block;
+    width:100%;
+    height:160px;
+    min-height:160px;
+    max-height:300px;
+    padding:13px;
+    border:1px solid #cdd5df;
+    border-radius:11px;
+    background:#fff;
+    color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+    font-size:16px;
+    line-height:1.62;
+    resize:vertical;
+    -webkit-appearance:none;
+    appearance:none;
+    box-shadow:none
+  }
+
+  textarea:focus{
+    outline:2px solid #b2ccff;
+    outline-offset:0;
+    border-color:var(--accent)
+  }
+
+  .buttons{
+    display:flex;
+    gap:9px;
+    flex-wrap:wrap;
+    margin-top:11px
+  }
+
+  button{
+    appearance:none;
+    -webkit-appearance:none;
+    border:0;
+    border-radius:10px;
+    padding:11px 15px;
+    font:inherit;
+    font-weight:700;
+    cursor:pointer;
+    touch-action:manipulation;
+    -webkit-tap-highlight-color:transparent
+  }
+
+  .primary{
+    background:var(--accent);
+    color:#fff
+  }
+
+  .secondary{
+    background:#eef2f6;
+    color:#344054
+  }
+
+  .ghost{
+    background:#fff;
+    color:var(--accent);
+    border:1px solid #b2ccff
+  }
+
+  .result{
+    margin-top:13px;
+    border-radius:11px;
+    padding:13px;
+    border:1px solid var(--line);
+    display:none
+  }
+
+  .result.show{
+    display:block
+  }
+
+  .pass{
+    background:#ecfdf3;
+    border-color:#abefc6
+  }
+
+  .retry{
+    background:#fffaeb;
+    border-color:#fedf89
+  }
+
+  .score{
+    font-size:27px;
+    font-weight:800;
+    margin-right:7px
+  }
+
+  .hint{
+    background:#fff7ed;
+    border:1px solid #fed7aa;
+    border-radius:9px;
+    padding:11px;
+    margin-top:9px
+  }
+
+  .good{
+    background:#f0fdf4;
+    border:1px solid #bbf7d0;
+    border-radius:9px;
+    padding:11px;
+    margin-top:9px
+  }
+
+  ul{
+    margin:7px 0 0 1.2em;
+    padding:0
+  }
+
+  details{
+    background:#fff;
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:10px 12px;
+    margin-top:9px
+  }
+
+  summary{
+    cursor:pointer;
+    font-weight:700
+  }
+
+  .tiny{
+    font-size:12px;
+    color:var(--muted)
+  }
+
+  .retryActions{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:12px
+  }
+
+  @media (max-width:600px){
+    .wrap{
+      padding:9px 9px 38px
+    }
+
+    header,
+    .card{
+      border-radius:11px;
+      padding:14px
+    }
+
+    h1{
+      font-size:20px
+    }
+
+    .choice input{
+      margin-top:11px
+    }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="wrap">
+
+<header>
+  <h1>一級建築士 製図記述トレーナー</h1>
+  <div class="sub">
+    2026年度テーマ想定：ホテル｜対象 → 配慮 → 設計操作 → 効果
+  </div>
+  <span class="badge">
+    v7：再採点改善＋軽量入力
+  </span>
+</header>
+
+<section class="card">
+  <div class="step">
+    QUESTION 2 / 10
+  </div>
+
+  <h2>
+    動線計画
+  </h2>
+
+  <div class="question">
+    全ての利用者及び従業員の動線計画について考慮したことを記述してください。
+  </div>
+</section>
+
+
+<section class="card">
+
+  <div class="step">
+    STEP 1
+  </div>
+
+  <h2>
+    誰の動線について書く？
+  </h2>
+
+  <div class="choices" id="who">
+
+    <label class="choice">
+      <input type="checkbox" value="宿泊者">
+      <span class="choiceBox">
+        <strong>宿泊者</strong>
+        <small>客室・フロント・共用部を利用する人</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="従業員">
+      <span class="choiceBox">
+        <strong>従業員</strong>
+        <small>管理・サービス・清掃等を行うスタッフ</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="レストラン利用者">
+      <span class="choiceBox">
+        <strong>レストラン利用者</strong>
+        <small>宿泊者以外の外来利用者を含む</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="搬入業者">
+      <span class="choiceBox">
+        <strong>搬入業者</strong>
+        <small>食材・リネン・物品等の搬入</small>
+      </span>
+    </label>
+
+  </div>
+
+</section>
+
+
+<section class="card">
+
+  <div class="step">
+    STEP 2
+  </div>
+
+  <h2>
+    何に配慮した？
+  </h2>
+
+  <div class="choices" id="purpose">
+
+    <label class="choice">
+      <input type="checkbox" value="動線の交錯防止">
+      <span class="choiceBox">
+        <strong>動線の交錯防止</strong>
+        <small>利用者と従業員・搬入動線を整理する</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="移動距離の短縮">
+      <span class="choiceBox">
+        <strong>移動距離の短縮</strong>
+        <small>業務効率や利用しやすさにつなげる</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="動線の明快さ">
+      <span class="choiceBox">
+        <strong>動線の明快さ</strong>
+        <small>初めて利用する人でも分かりやすくする</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="安全性">
+      <span class="choiceBox">
+        <strong>安全性</strong>
+        <small>避難や歩行時の安全性に配慮する</small>
+      </span>
+    </label>
+
+  </div>
+
+</section>
+
+
+<section class="card">
+
+  <div class="step">
+    STEP 3
+  </div>
+
+  <h2>
+    図面上で何をした？
+  </h2>
+
+  <div class="choices" id="action">
+
+    <label class="choice">
+      <input type="checkbox" value="宿泊者用とサービス用の動線を分離">
+      <span class="choiceBox">
+        <strong>宿泊者用とサービス用の動線を分離</strong>
+        <small>利用者動線と従業員・サービス動線を整理</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="管理部門をまとめて配置">
+      <span class="choiceBox">
+        <strong>管理部門をまとめて配置</strong>
+        <small>従業員の移動距離を抑える</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="宿泊部門の廊下を見通しのよい形状とする">
+      <span class="choiceBox">
+        <strong>宿泊部門の廊下を見通しのよい形状とする</strong>
+        <small>経路を認識しやすくする</small>
+      </span>
+    </label>
+
+    <label class="choice">
+      <input type="checkbox" value="従業員用出入口を別に設ける">
+      <span class="choiceBox">
+        <strong>従業員用出入口を別に設ける</strong>
+        <small>利用者動線との交錯を避ける</small>
+      </span>
+    </label>
+
+  </div>
+
+  <div class="buttons">
+    <button type="button" class="secondary" id="makeSkeleton">
+      選択内容から骨格を作る
+    </button>
+  </div>
+
+  <div id="skeleton" class="result"></div>
+
+</section>
+
+
+<section class="card" id="answerCard">
+
+  <div class="step">
+    STEP 4
+  </div>
+
+  <h2>
+    自分の言葉で回答を書く
+  </h2>
+
+  <textarea
+    id="answer"
+    autocomplete="off"
+    autocorrect="off"
+    autocapitalize="none"
+    spellcheck="false"
+    inputmode="text"
+    placeholder="例：従業員の作業動線の短縮に配慮し、……"
+  ></textarea>
+
+  <p class="tiny">
+    入力中はJavaScriptを実行しません。採点ボタンを押したときだけ回答を読み取ります。
+  </p>
+
+  <div class="buttons">
+
+    <button type="button" class="primary" id="scoreBtn">
+      採点する
+    </button>
+
+    <button type="button" class="ghost" id="resetBtn">
+      回答だけクリア
+    </button>
+
+  </div>
+
+  <div id="result" class="result"></div>
+
+</section>
+
+</div>
+
+
+<script>
+
+(function(){
+
+  'use strict';
+
+  var answer =
+    document.getElementById('answer');
+
+  var result =
+    document.getElementById('result');
+
+  var scoreBtn =
+    document.getElementById('scoreBtn');
+
+  var skeleton =
+    document.getElementById('skeleton');
+
+
+  function checkedValues(id){
+
+    var list =
+      document.querySelectorAll(
+        '#' + id + ' input:checked'
+      );
+
+    var out = [];
+
+    for(var i = 0; i < list.length; i++){
+
+      out.push(
+        list[i].value
+      );
+
+    }
+
+    return out;
+
+  }
+
+
+  function esc(s){
+
+    return String(s).replace(
+
+      /[&<>\"]/g,
+
+      function(c){
+
+        return {
+          '&':'&amp;',
+          '<':'&lt;',
+          '>':'&gt;',
+          '\"':'&quot;'
+        }[c];
+
+      }
+
+    );
+
+  }
+
+
+  function show(el, html, cls){
+
+    el.className =
+      'result show ' + (cls || '');
+
+    el.innerHTML =
+      html;
+
+  }
+
+
+  function grade(){
+
+    var ans =
+      answer.value.trim();
+
+
+    if(ans.length < 8){
+
+      show(
+        result,
+
+        '<strong>回答が短すぎます。</strong>' +
+
+        '<br>' +
+
+        '「対象」「配慮」「具体的な設計操作」を入れてみてください。' +
+
+        '<div class="retryActions">' +
+
+        '<button type="button" class="ghost" id="backToEdit">' +
+        '回答を修正する' +
+        '</button>' +
+
+        '<button type="button" class="primary" id="retryScore">' +
+        'この回答を再採点' +
+        '</button>' +
+
+        '</div>',
+
+        'retry'
+      );
+
+      bindRetryButtons();
+
+      scoreBtn.textContent =
+        '再採点する';
+
+      return;
+
+    }
+
+
+    var points = 0;
+
+    var good = [];
+
+    var missing = [];
+
+
+    var hasWho =
+      /(宿泊者|従業員|利用者|レストラン|搬入|サービス)/.test(ans);
+
+
+    var hasPurpose =
+      /(交錯|短縮|明快|安全|効率|分離|避難|移動距離|動線)/.test(ans);
+
+
+    var hasAction =
+      /(配置|分離|設け|まとめ|直線|見通し|廊下|出入口|EV|エレベーター|バックヤード)/.test(ans);
+
+
+    var hasEffect =
+      /(ため|ように|ことで|確保|向上|効率|安全|容易|短縮|防止|明確|分かりやす)/.test(ans);
+
+
+    var concrete =
+      ans.length >= 34;
+
+
+    if(hasWho){
+
+      points += 20;
+
+      good.push(
+        '「誰の動線か」が文章の中で明確です。'
+      );
+
+    }
+    else{
+
+      missing.push(
+        '誰の動線について書いているかを明示する。'
+      );
+
+    }
+
+
+    if(hasPurpose){
+
+      points += 20;
+
+      good.push(
+        '動線計画の目的・配慮事項が読み取れます。'
+      );
+
+    }
+    else{
+
+      missing.push(
+        '交錯防止・移動距離短縮・安全性など、配慮の目的を入れる。'
+      );
+
+    }
+
+
+    if(hasAction){
+
+      points += 30;
+
+      good.push(
+        '「配置した／分離した／設けた」など、具体的な設計操作まで書けています。'
+      );
+
+    }
+    else{
+
+      missing.push(
+        '図面上で実際に何をしたのかを具体化する。'
+      );
+
+    }
+
+
+    if(hasEffect){
+
+      points += 20;
+
+      good.push(
+        '設計操作だけで終わらず、その効果・狙いまでつなげられています。'
+      );
+
+    }
+    else{
+
+      missing.push(
+        'その計画によって何が良くなるのかを最後に付ける。'
+      );
+
+    }
+
+
+    if(concrete){
+
+      points += 10;
+
+      good.push(
+        '一文として十分な具体性と情報量があります。'
+      );
+
+    }
+    else{
+
+      missing.push(
+        'もう一段具体化し、30〜60字程度を目安にまとめる。'
+      );
+
+    }
+
+
+    if(points >= 75){
+
+      show(
+
+        result,
+
+        '<div>' +
+
+        '<span class="score">' +
+        points +
+        '点</span>' +
+
+        '<strong>合格</strong>' +
+
+        '</div>' +
+
+        '<div class="good">' +
+
+        '<strong>良かった点</strong>' +
+
+        '<ul><li>' +
+
+        good.join('</li><li>') +
+
+        '</li></ul>' +
+
+        '</div>' +
+
+        '<p>' +
+
+        '<strong>次の狙い：</strong>' +
+
+        '同じ内容を、より短く・明確にまとめられるか試してみましょう。' +
+
+        '</p>' +
+
+        '<div class="retryActions">' +
+
+        '<button type="button" class="ghost" id="backToEdit">' +
+        '回答をさらに推敲する' +
+        '</button>' +
+
+        '<button type="button" class="primary" id="retryScore">' +
+        '推敲後に再採点' +
+        '</button>' +
+
+        '</div>',
+
+        'pass'
+      );
+
+    }
+    else{
+
+      var hint1 =
+        missing[0] ||
+        '回答をもう少し具体化してみてください。';
+
+
+      var hint2 =
+        missing[1] ||
+        '「何をした → 何が良くなる」のつながりを確認してみましょう。';
+
+
+      show(
+
+        result,
+
+        '<div>' +
+
+        '<span class="score">' +
+        points +
+        '点</span>' +
+
+        '<strong>もう一度</strong>' +
+
+        '</div>' +
+
+        '<div class="hint">' +
+
+        '<strong>ヒント1</strong>' +
+
+        '<br>' +
+
+        esc(hint1) +
+
+        '</div>' +
+
+        '<details>' +
+
+        '<summary>' +
+        'もう1つヒントを見る' +
+        '</summary>' +
+
+        '<div class="hint">' +
+        esc(hint2) +
+        '</div>' +
+
+        '</details>' +
+
+        '<p class="tiny">' +
+
+        '回答は消えません。上の回答欄を書き直し、そのまま再採点できます。' +
+
+        '</p>' +
+
+        '<div class="retryActions">' +
+
+        '<button type="button" class="ghost" id="backToEdit">' +
+        '回答を修正する' +
+        '</button>' +
+
+        '<button type="button" class="primary" id="retryScore">' +
+        '修正後に再採点' +
+        '</button>' +
+
+        '</div>',
+
+        'retry'
+      );
+
+    }
+
+
+    scoreBtn.textContent =
+      '再採点する';
+
+
+    bindRetryButtons();
+
+  }
+
+
+  function bindRetryButtons(){
+
+    var back =
+      document.getElementById(
+        'backToEdit'
+      );
+
+
+    var retry =
+      document.getElementById(
+        'retryScore'
+      );
+
+
+    if(back){
+
+      back.onclick =
+        function(){
+
+          answer.focus();
+
+        };
+
+    }
+
+
+    if(retry){
+
+      retry.onclick =
+        grade;
+
+    }
+
+  }
+
+
+  document.getElementById(
+    'makeSkeleton'
+  ).onclick =
+    function(){
+
+      var who =
+        checkedValues('who');
+
+      var purpose =
+        checkedValues('purpose');
+
+      var action =
+        checkedValues('action');
+
+
+      if(
+        !who.length ||
+        !purpose.length ||
+        !action.length
+      ){
+
+        show(
+
+          skeleton,
+
+          '<strong>まだ骨格を作れません。</strong>' +
+
+          '<br>' +
+
+          'STEP1〜3から最低1つずつ選んでください。',
+
+          'retry'
+        );
+
+        return;
+
+      }
+
+
+      var text =
+
+        who.join('・') +
+
+        'の' +
+
+        purpose[0] +
+
+        'に配慮し、' +
+
+        action[0] +
+
+        'ことで、＿＿＿＿＿＿＿＿＿＿となるよう計画した。';
+
+
+      show(
+
+        skeleton,
+
+        '<strong>回答の骨格</strong>' +
+
+        '<br>' +
+
+        esc(text) +
+
+        '<br>' +
+
+        '<span class="tiny">' +
+
+        '空欄には「その結果どう良くなるか」を自分で入れてみてください。' +
+
+        '</span>',
+
+        ''
+      );
+
+    };
+
+
+  scoreBtn.onclick =
+    grade;
+
+
+  document.getElementById(
+    'resetBtn'
+  ).onclick =
+    function(){
+
+      answer.value = '';
+
+      result.className =
+        'result';
+
+      result.innerHTML =
+        '';
+
+      scoreBtn.textContent =
+        '採点する';
+
+      answer.focus();
+
+    };
+
+})();
+
+</script>
+
+</body>
+</html>
